@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_camera"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="Rehber" />
+            <!-- Kişiler listelenecek , resimleri varsa getirilecek.
+             sadece numara eklenebilir. tablı da olabilir sayfanın üst kısmındada olabilir.
+            Çoklu seçim imkanı olacak. Sms veya arama engelle ya da
+            ikiside seçenekleri olacak. -->
+            <item
+                android:id="@+id/nav_gallery"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Engellenenler" />
+            <!-- İki tab olacak. Arama ve sms şeklinde  engellenen kişiler burada
+             listelenecek yine çoklu seçimle birlikte engeller kaldırılabilecek.
+              her numaranın altında ikişer tane son arama ve mesaj görüntülenecek.
+              Tümünü göster seçeneği ile tüm sonuçları görüntüleyebilecek.-->
+            <item
+                android:id="@+id/nav_slideshow"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="Şifre Yönetimi" />
+            <item
+                android:id="@+id/nav_reserve"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Zaman Yönetimi" />
+            <!-- Belirli saat aralıklarında belirli kişilere otomatik cevap gönderebilmeyi sağlar-->
+            <item
+                android:id="@+id/nav_manage"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Genel Ayarlar" />
+        </menu>
+    </item>
+
+</menu>

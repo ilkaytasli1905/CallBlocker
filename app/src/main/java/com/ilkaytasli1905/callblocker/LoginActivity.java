@@ -37,6 +37,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -46,11 +47,14 @@ import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity {
     DBHelper db;
+    EditText etName;
+    EditText etPassword;
+    EditText etPasswordAgain;
     private static String systemLanguage = Locale.getDefault().getCountry();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db = new DBHelper(this);
+        db = new DBHelper(this,systemLanguage);
         db.getWritableDatabase();
         if(db.isUserCreated()){
             setContentView(R.layout.login_main);
@@ -68,11 +72,11 @@ public class LoginActivity extends AppCompatActivity {
             if(systemLanguage.equals("TR")) {
                 AutoResizeTextView t = findViewById(R.id.autoText);
                 t.setText("Merhaba. Size hitap edebilmemiz için isminizi , ayarlarınızın güvenliği ve değiştirilememesi için ise parolanızı belirtilen kutucuklara girerek kaydetme işlemini gerçekleştirin.");
-                EditText etName = findViewById(R.id.etName);
+                etName = findViewById(R.id.etName);
                 etName.setHint("İsminizi Girin");
-                EditText etPassword = findViewById(R.id.etPassword);
+                etPassword = findViewById(R.id.etPassword);
                 etPassword.setHint("Parolanızı Girin");
-                EditText etPasswordAgain = findViewById(R.id.etPasswordAgain);
+                etPasswordAgain = findViewById(R.id.etPasswordAgain);
                 etPasswordAgain.setHint("Parolanızı Tekrar Girin");
                 Button b = findViewById(R.id.button);
                 b.setText("Kaydet");
@@ -80,11 +84,11 @@ public class LoginActivity extends AppCompatActivity {
             else{
                 AutoResizeTextView t = findViewById(R.id.autoText);
                 t.setText("Hello. Enter your name to talk you and enter your password for your settings safety and someone can not change your settings.");
-                EditText etName = findViewById(R.id.etName);
+                etName = findViewById(R.id.etName);
                 etName.setHint("Enter Name");
-                EditText etPassword = findViewById(R.id.etPassword);
+                etPassword = findViewById(R.id.etPassword);
                 etPassword.setHint("Enter Password");
-                EditText etPasswordAgain = findViewById(R.id.etPasswordAgain);
+                etPasswordAgain = findViewById(R.id.etPasswordAgain);
                 etPasswordAgain.setHint("Enter Password Again");
                 Button b = findViewById(R.id.button);
                 b.setText("Save");
@@ -96,7 +100,41 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void saveClicked(View v){
-
+        etName = findViewById(R.id.etName);
+        etPassword = findViewById(R.id.etPassword);
+        etPasswordAgain = findViewById(R.id.etPasswordAgain);
+        if(etName.getText().toString().equals("") ||
+           etPassword.getText().toString().equals("") ||
+           etPasswordAgain.getText().toString().equals("")){
+            if(systemLanguage.equals("TR")) {
+                Toast.makeText(getApplicationContext(),"Lütfen tüm alanları doldurun.",Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(getApplicationContext(),"Please fill in all fields.",Toast.LENGTH_LONG).show();
+            }
+        }
+        else if (etPassword.getText().length()<6 || etPasswordAgain.getText().length()<6){
+            if(systemLanguage.equals("TR")) {
+                Toast.makeText(getApplicationContext(),"Şifre en az 6 haneli olmalıdır.",Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(getApplicationContext(),"Password must be at least 6 digits.",Toast.LENGTH_LONG).show();
+            }
+        }
+        else if (!etPassword.getText().toString().equals(etPasswordAgain.getText().toString())){
+            if(systemLanguage.equals("TR")) {
+                Toast.makeText(getApplicationContext(),"Şifreler aynı olmalıdır.",Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(getApplicationContext(),"Passwords must be the same.",Toast.LENGTH_LONG).show();
+            }
+        }
+        else{
+            Boolean result = db.insertUserInfo(etName.getText().toString(),etPassword.getText().toString(),getApplicationContext());
+            if(result) {
+                this.recreate();
+            }
+        }
     }
     public void loginClicked(View v){
 

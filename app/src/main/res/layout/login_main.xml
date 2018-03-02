@@ -109,7 +109,9 @@
                     android:layout_weight="1"
                     android:orientation="horizontal" />
                 <Button
+                    android:id="@+id/button"
                     android:layout_width="0dp"
+                    android:onClick="loginClicked"
                     android:layout_height="match_parent"
                     android:layout_weight="6"
                     android:textColor="#ffffff"

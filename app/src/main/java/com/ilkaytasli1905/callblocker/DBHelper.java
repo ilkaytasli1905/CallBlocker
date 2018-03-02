@@ -1,11 +1,13 @@
 package com.ilkaytasli1905.callblocker;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by İlkay Taşlı on 13.02.2018.
@@ -13,26 +15,25 @@ import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
 
+    String systemLanguage = "";
     final String CREATE_TABLE_USER = "CREATE TABLE IF NOT EXISTS tbl_User ("
             + "UserId INTEGER primary key AUTOINCREMENT,"
             + "Name TEXT,"
-            + "Pasword TEXT);";
+            + "Password TEXT);";
 
 
-    public DBHelper(Context context) {
-        super(context, "CallBlockerTest", null, 2);
-
+    public DBHelper(Context context,String systemLanguage) {
+        super(context, "CallBlockerDb", null, 1);
+        this.systemLanguage = systemLanguage;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.e("Message" , "buradayim");
         db.execSQL(CREATE_TABLE_USER);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.e("Message" , "buradayim2");
     }
 
     public boolean  isUserCreated(){
@@ -47,7 +48,30 @@ public class DBHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public void insertUserInfo(String name , String password){
-
+    public Boolean insertUserInfo(String name , String password,Context context){
+        try{
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("Name" , name);
+            values.put("Password" , password);
+            db.insert("tbl_User",null,values);
+            db.close();
+            if(systemLanguage.equals("TR")){
+                Toast.makeText(context,"Kaydetme işlemi tamamlandı.",Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(context,"Save process completed.",Toast.LENGTH_LONG).show();
+            }
+            return true;
+        }
+        catch(Exception ex){
+            if(systemLanguage.equals("TR")) {
+                Toast.makeText(context,"Kaydetme işlemi sırasında hata oluştu.",Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(context,"Error occured during save process.",Toast.LENGTH_LONG).show();
+            }
+            return false;
+        }
     }
 }

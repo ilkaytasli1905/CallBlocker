@@ -7,15 +7,15 @@
         <menu>
             <item
                 android:id="@+id/nav_camera"
-                android:icon="@drawable/ic_menu_camera"
-                android:title="Rehber" />
+                android:icon="@drawable/ic_people_black_48dp"
+                android:title="Kişiler/Kişi Ekle" />
             <!-- Kişiler listelenecek , resimleri varsa getirilecek.
              sadece numara eklenebilir. tablı da olabilir sayfanın üst kısmındada olabilir.
             Çoklu seçim imkanı olacak. Sms veya arama engelle ya da
             ikiside seçenekleri olacak. -->
             <item
                 android:id="@+id/nav_gallery"
-                android:icon="@drawable/ic_menu_gallery"
+                android:icon="@drawable/ic_block_black_48dp"
                 android:title="Engellenenler" />
             <!-- İki tab olacak. Arama ve sms şeklinde  engellenen kişiler burada
              listelenecek yine çoklu seçimle birlikte engeller kaldırılabilecek.
@@ -23,16 +23,16 @@
               Tümünü göster seçeneği ile tüm sonuçları görüntüleyebilecek.-->
             <item
                 android:id="@+id/nav_slideshow"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@drawable/ic_account_circle_black_48dp"
                 android:title="Şifre Yönetimi" />
             <item
                 android:id="@+id/nav_reserve"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/ic_timer_off_black_48dp"
                 android:title="Zaman Yönetimi" />
             <!-- Belirli saat aralıklarında belirli kişilere otomatik cevap gönderebilmeyi sağlar-->
             <item
                 android:id="@+id/nav_manage"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/ic_settings_black_48dp"
                 android:title="Genel Ayarlar" />
         </menu>
     </item>

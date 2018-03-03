@@ -74,4 +74,64 @@ public class DBHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+    public Boolean passwordControl(String password , Context context){
+        try{
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor  = db.rawQuery("select Password from tbl_User", null);
+            if(cursor.moveToFirst()){
+                do{
+                    if(cursor.getString(0).equals(password)){
+                        cursor.close();
+                        db.close();
+                        if(systemLanguage.equals("TR")){
+                            Toast.makeText(context,"Giriş işlemi tamamlandı.",Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            Toast.makeText(context,"Login process completed.",Toast.LENGTH_LONG).show();
+                        }
+                        return true;
+                    }
+                    else{
+                        cursor.close();
+                        db.close();
+                        if(systemLanguage.equals("TR")){
+                            Toast.makeText(context,"Şifre hatalı.",Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            Toast.makeText(context,"Password is wrong.",Toast.LENGTH_LONG).show();
+                        }
+                        return false;
+                    }
+                }while(cursor.moveToNext());
+            }
+            return true;
+        }
+        catch(Exception ex){
+            if(systemLanguage.equals("TR")) {
+                Toast.makeText(context,"Giriş işlemi sırasında hata oluştu.",Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(context,"Error occured during login process.",Toast.LENGTH_LONG).show();
+            }
+            return false;
+        }
+    }
+    public String getUserName(){
+        try{
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor  = db.rawQuery("select Name from tbl_User", null);
+            if(cursor.moveToFirst()){
+                do{
+                   String a = cursor.getString(0);
+                        cursor.close();
+                        db.close();
+                        return a;
+                }while(cursor.moveToNext());
+            }
+            return "";
+        }
+        catch(Exception ex){
+            return "";
+        }
+    }
 }

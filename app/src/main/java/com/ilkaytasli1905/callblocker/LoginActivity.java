@@ -59,12 +59,20 @@ public class LoginActivity extends AppCompatActivity {
         if(db.isUserCreated()){
             setContentView(R.layout.login_main);
             if(systemLanguage.equals("TR")) {
-                AutoResizeTextView t = (AutoResizeTextView) findViewById(R.id.autoText);
-                t.setText("Merhaba İlkay Taşlı. Hoşgeldiniz. Uygulamaya giriş yapabilmek için belirlemiş olduğunuz parolanızı aşağıdaki kutuya girip devam et butonuna tıklayınız.");
+                AutoResizeTextView t = findViewById(R.id.autoText);
+                t.setText("Merhaba " + db.getUserName() + ". Uygulamaya giriş yapabilmek için parolanızı girin ve GİRİŞ YAP butonuna tıklayın.");
+                etPassword = findViewById(R.id.etPassword);
+                etPassword.setHint("Parolanızı Girin");
+                Button b = findViewById(R.id.button);
+                b.setText("Giriş Yap");
             }
-
             else{
-
+                AutoResizeTextView t = findViewById(R.id.autoText);
+                t.setText("Hello " + db.getUserName() + ". Enter your password and click LOGIN button to login the app.");
+                etPassword = findViewById(R.id.etPassword);
+                etPassword.setHint("Enter password");
+                Button b = findViewById(R.id.button);
+                b.setText("Login");
             }
         }
         else{
@@ -98,7 +106,6 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
-
     public void saveClicked(View v){
         etName = findViewById(R.id.etName);
         etPassword = findViewById(R.id.etPassword);
@@ -132,11 +139,29 @@ public class LoginActivity extends AppCompatActivity {
         else{
             Boolean result = db.insertUserInfo(etName.getText().toString(),etPassword.getText().toString(),getApplicationContext());
             if(result) {
+                etPassword.setText("");
                 this.recreate();
             }
         }
     }
     public void loginClicked(View v){
-
+        etPassword = findViewById(R.id.etPassword);
+        if(etPassword.getText().length()<6){
+            if(systemLanguage.equals("TR")) {
+                Toast.makeText(getApplicationContext(),"Şifre en az 6 haneli olmalıdır.",Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(getApplicationContext(),"Password must be at least 6 digits.",Toast.LENGTH_LONG).show();
+            }
+        }
+        else{
+            Boolean result = db.passwordControl(etPassword.getText().toString(),getApplicationContext());
+            if(result){
+                Intent intent = new Intent(this, MainActivity.class);
+                finish();
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_from_right,R.anim.slide_to_left);
+            }
+        }
     }
 }

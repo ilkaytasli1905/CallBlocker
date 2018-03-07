@@ -7,12 +7,5 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ilkaytasli1905.callblocker.MainActivity"
     tools:showIn="@layout/app_bar_main">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"></RelativeLayout>
-   <ImageView
-       android:id="@+id/image"
-       android:layout_width="50dp"
-       android:layout_height="50dp" />
 
 </android.support.constraint.ConstraintLayout>
